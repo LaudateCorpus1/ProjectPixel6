@@ -1,0 +1,16 @@
+fullname validate
+
+function validateFullName(value){
+    var letters = /^[A-Za-z ]+$/;
+    if(value.match(letters))
+      {
+        console.log("")
+       return true;
+      }
+    else
+      {
+        console.log("Cannot enter numeric or special characters")
+      return false;
+      }
+
+}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html> <head>
+    <title>Pixel6</title>
+    <link rel="stylesheet" href="../CSS/app.css">
+
+<body>
+    <div>
+    <h1> Pixel6 Registration Form</h1> 
+<form> 
+<table> 
+    <tr> 
+        <td> Full Name: </td> 
+        <td> <input type="text" id="txtFirstName" minlength="4" onkeypress="return validateFullName(event,this);" ></td> 
+        <td><label id="errorFirstName" class="redcolor"></label></td> 
+ </tr>
+    <tr> 
+        <td> Email ID: </td> 
+        <td><input type="text" id="txtEmail"  onchange="validateEMail(this.value);"/></td> 
+        <td> <label id="errorEmail" class="redcolor"></label></td>
+    </tr> 
+    <tr> 
+        <td> Phone Number: </td> 
+        <td> <input type="text" id="txtPhone" onkeypress="return validatePhone(event,this);" onchange="formatPhoneNumberonchange();"> 
+        <img id="imageLogo" class="img" style="visibility: hidden;"/></td> 
+        <td> <label id="errorTelephone" class="redcolor"></label></td>
+    </tr>
+    <tr> <td> </td> 
+        <td> <input type="button"  value="Submit" onclick="SubmitVal()"/></td> 
+    </tr>
+
+</table> 
+</form> 
+</div>
+</body> 
+<script src="../JS/app.js"></script>
+</html>
