@@ -1,7 +1,10 @@
 var firstname=document.getElementById("txtFirstName");
 var email=document.getElementById("txtEmail");
 var phone=document.getElementById("txtPhone");
-var image=document.getElementById("txtimg");
+var image=document.getElementById('imageLogo');
+var errorFirstName=document.getElementById("errorFirstName")
+var errorTelephone=document.getElementById("errorTelephone")
+var errorEmail=document.getElementById("errorEmail")
 var randomNumber;
 
 //To restrict user entering special char or numeric value
@@ -31,25 +34,25 @@ function validatePhone(event){
   }
   else{
     //Code to show phone logo based on first three digit
-    var first3digit= document.getElementById("txtPhone").value.substring(1, 4);
+    var first3digit= phone.value.substring(1, 4);
     formatPhoneNumber(event);
     if(first3digit>=621 && first3digit<=799){
       //jio
-    document.getElementById('imageLogo').src="../images/jio.png"
-    document.getElementById('imageLogo').style.visibility='visible';
+      image.src="../images/jio.png"
+      image.style.visibility='visible';
     } 
     else if(first3digit>=801 && first3digit<=920){
  //idea
-    document.getElementById('imageLogo').src="../images/idea.png"
-    document.getElementById('imageLogo').style.visibility='visible';
+ image.src="../images/idea.png"
+ image.style.visibility='visible';
     }
     else if(first3digit>=921 && first3digit<=999){
       //vodaphone
-     document.getElementById('imageLogo').src="../images/voda.png"
-     document.getElementById('imageLogo').style.visibility='visible';
+      image.src="../images/voda.png"
+      image.style.visibility='visible';
      }
     else{
-     document.getElementById('imageLogo').style.visibility='hidden';
+      image.style.visibility='hidden';
     }
     return true;
   }
@@ -58,28 +61,29 @@ function validatePhone(event){
 
 //to format phone number is given format
 function formatPhoneNumber(e){
-  if(document.getElementById("txtPhone").value!=undefined && document.getElementById("txtPhone").value!="" 
-     && document.getElementById("txtPhone").value!=''){
-   var txtValue=document.getElementById("txtPhone").value;
+  if(phone.value!=undefined && phone.value!="" 
+     && phone.value!=''){
+   var txtValue=phone.value;
    var y=(typeof(e.target)!=='undefined')?e.target:e[0];
    var x=y.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);      
-   document.getElementById("txtPhone").value=!x[2] ? x[1] :'(' + x[1] + ') '
+   phone.value=!x[2] ? x[1] :'(' + x[1] + ') '
    + (x[2] ? '-' +x[2] :'') + (x[3] ? '-' +x[3] :'');
   }
 }
 function formatPhoneNumberonchange(){
   if(phone.value.replace(/\D/g, "").length<=10){
-    if(document.getElementById("txtPhone").value!=undefined && document.getElementById("txtPhone").value!="" 
-    && document.getElementById("txtPhone").value!=''){
-  var txtValue=document.getElementById("txtPhone").value;
+    if(phone.value!=undefined && phone.value!="" 
+    && phone.value!=''){
+      errorTelephone.innerHTML="";
+  var txtValue=phone.value;
   var x=txtValue.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);      
-  document.getElementById("txtPhone").value=!x[2] ? x[1] :'(' + x[1] + ') '
+  phone.value=!x[2] ? x[1] :'(' + x[1] + ') '
                                               + (x[2] ? '-' +x[2] :'') + (x[3] ? '-' +x[3] :'');
   }
  
  }
  else{
-  document.getElementById("errorTelephone").innerHTML="Please enter only 10 digit phone number";
+  errorTelephone.innerHTML="Please enter only 10 digit phone number";
  }
 }
 
@@ -95,24 +99,27 @@ function SubmitVal(){
         var namearr=firstname.value.split(" ");
         if(namearr!=undefined && namearr.length>=2){
           for(var i=0;i<namearr.length;i++){
-            if(namearr[i].length<4){
-              allValidate=false;
-              document.getElementById("errorFirstName").innerHTML="Please enter valid name, each word should have alteast 4 charcters";
-              break;
+            if(namearr[i]!=""){
+              if(namearr[i].length<4){
+                allValidate=false;
+                errorFirstName.innerHTML="Please enter valid name, each word should have alteast 4 charcters";
+                break;
+              }
+              else{
+                errorFirstName.innerHTML="";
+              }
             }
-            else{
-              document.getElementById("errorFirstName").innerHTML="";
-            }
+           
           }
         }
         else{
           allValidate=false;
-          document.getElementById("errorFirstName").innerHTML="Please enter valid name, each word should have alteast 4 charcters";
+          errorFirstName.innerHTML="Please enter valid name, each word should have alteast 4 charcters";
         } 
       }
       else{
         allValidate=false;
-          document.getElementById("errorFirstName").innerHTML="Please enter valid name, each word should have alteast 4 charcters";
+        errorFirstName.innerHTML="Please enter valid name, each word should have alteast 4 charcters";
         }
 
 
@@ -120,27 +127,27 @@ function SubmitVal(){
      if(!validateEMail(email.value))
       {
           allValidate=false
-        document.getElementById("errorEmail").innerHTML="Please enter valid email id";
+          errorEmail.innerHTML="Please enter valid email id";
       }
       else if(validateEMail(email.value)){
-        document.getElementById("errorEmail").innerHTML="";
+        errorEmail.innerHTML="";
       }
 
   //Validate Phone
       if((phone.value!=null || phone.value!="") && allValidate) {
         var res = phone.value.replace(/\D/g, "");
           if(res.length==10){
-             document.getElementById("errorTelephone").innerHTML="";
+            errorTelephone.innerHTML="";
             allValidate=true;
            }
           else{
         allValidate=false;
-        document.getElementById("errorTelephone").innerHTML="Please enter only 10 digit phone number";
+        errorTelephone.innerHTML="Please enter only 10 digit phone number";
            }
       }
       else if(phone.value==null || phone.value==""){
         allValidate=false;
-        document.getElementById("errorTelephone").innerHTML="Please enter only 10 digit phone number";
+        errorTelephone.innerHTML="Please enter only 10 digit phone number";
 
       }
 
@@ -165,9 +172,9 @@ function SubmitVal(){
 
 //to cllear all errors
 function clearAllError(){
-  document.getElementById("errorFirstName").innerHTML="";
-  document.getElementById("errorEmail").innerHTML="";
-  document.getElementById("errorTelephone").innerHTML="";
+  errorFirstName.innerHTML="";
+  errorEmail.innerHTML="";
+  errorTelephone.innerHTML="";
 }
 
 //to show it on lael once page is ready
